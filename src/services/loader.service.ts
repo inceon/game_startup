@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import { Loader, Texture } from 'pixi.js';
 import AssetsNames from '../misc/assets.names';
 
@@ -33,20 +34,14 @@ export class LoaderService {
      * Load all assets
      * @param assets
      */
-    public loadAll(assets: any): void {
+    public loadAll(assets: any, callback: () => void): void {
         for (let name in assets) {
             this.load(assets[name], LoaderService.ASSETS_PATH + assets[name]);
         }
-    }
 
-    /**
-     * Start loading
-     * @param assets
-     * @param callback
-     */
-    public loadAllAndRun(assets: any, callback: () => void): void {
-        this.loadAll(assets);
-        this.loader.load(callback);
+        if (_.isFunction(callback)) {
+            this.loader.load(callback);
+        }
     }
 
     /**

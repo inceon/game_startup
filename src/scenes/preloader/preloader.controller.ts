@@ -14,7 +14,7 @@ export default class PreloaderController extends AbstractController {
     public showScene(): void {
         super.showScene();
 
-        LoaderService.getInstance().loadAllAndRun(
+        LoaderService.getInstance().loadAll(
             AssetsNames.GAME_ASSETS,
             () => {
                 setTimeout(() => {

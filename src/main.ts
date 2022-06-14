@@ -1,15 +1,25 @@
+// @ts-ignore
+import * as PIXI from 'pixi.js';
 import { Application } from 'pixi.js';
 import MVCManager from './core/mvc-manager';
 import StateManager from './core/state-manager';
 import Screen from './misc/app.constants';
+import AssetsNames from './misc/assets.names';
 import ScenesNames from './misc/scenes.names';
 import States from './misc/states.names';
 import AbstractController from './scenes/abstract/abstract.controller';
 import AbstractModel from './scenes/abstract/abstract.model';
+import GameController from './scenes/game/game.controller';
+import GameModel from './scenes/game/game.model';
+import GameView from './scenes/game/game.view';
 import IntroView from './scenes/intro/intro.view';
 import PreloaderController from './scenes/preloader/preloader.controller';
 import PreloaderView from './scenes/preloader/preloader.view';
+import { LoaderService } from './services/loader.service';
+import RescaleService from './services/rescale.service';
 import './style.css';
+// @ts-ignore
+window.PIXI = PIXI;
 
 class Game {
     protected app: Application;
@@ -18,15 +28,26 @@ class Game {
     protected stateManager: StateManager;
 
     constructor() {
+        let rendererOptions = {
+            backgroundAlpha: 1,
+            resolution: Math.min(
+                Screen.MAX_RESOLUTION,
+                window.devicePixelRatio
+            ),
+            autoDensity: true,
+            backgroundColor: 0xeeeeee
+        };
         this.app = new Application({
             width: Screen.WIDTH,
-            height: Screen.HEIGHT
+            height: Screen.HEIGHT,
+            ...rendererOptions
         });
         this.addPixiToDOM();
         this.initManagers();
         this.initScenes();
+        this.initServices();
         this.initStates();
-        this.stateManager.changeState(States.PRELOADER);
+        this.loadInitialAssets();
     }
 
     /**
@@ -67,6 +88,16 @@ class Game {
             IntroView,
             AbstractModel
         );
+        this.mvcManager.addScene(
+            ScenesNames.GAME,
+            GameController,
+            GameView,
+            GameModel
+        );
+    }
+
+    protected initServices(): void {
+        RescaleService.getInstance().init(this.app);
     }
 
     /**
@@ -81,6 +112,22 @@ class Game {
         this.stateManager.addState(
             States.INTRO,
             this.mvcManager.getScene(ScenesNames.INTRO)
+        );
+        this.stateManager.addState(
+            States.GAME,
+            this.mvcManager.getScene(ScenesNames.GAME)
+        );
+    }
+
+    /**
+     * Load initial assets
+     */
+    protected loadInitialAssets(): void {
+        LoaderService.getInstance().loadAllAndRun(
+            AssetsNames.PRELOADER_ASSETS,
+            () => {
+                this.stateManager.changeState(States.PRELOADER);
+            }
         );
     }
 }

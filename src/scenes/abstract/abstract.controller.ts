@@ -2,30 +2,30 @@ import AbstractModel from './abstract.model';
 import AbstractView from './abstract.view';
 
 export default class AbstractController {
-    protected scene: AbstractView;
+    protected view: AbstractView;
     protected model: AbstractModel;
 
     /**
      * Initialize controller
-     * @param scene
+     * @param view
      * @param model
      */
-    constructor(scene: AbstractView, model: AbstractModel) {
-        this.scene = scene;
+    constructor(view: AbstractView, model: AbstractModel) {
+        this.view = view;
         this.model = model;
     }
 
     /**
-     * Show the scene
+     * Show the view
      */
     showScene(): void {
-        this.scene.show();
+        this.view.show();
     }
 
     /**
-     * Hide the scene
+     * Hide the view
      */
     hideScene(): void {
-        this.scene.hide();
+        this.view.hide();
     }
 }

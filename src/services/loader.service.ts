@@ -1,9 +1,10 @@
 import { Loader, Texture } from 'pixi.js';
+import AssetsNames from '../misc/assets.names';
 
 export class LoaderService {
     private static instance: LoaderService;
     private loader: Loader;
-    private static readonly ASSETS_PATH: string = 'assets/';
+    private static readonly ASSETS_PATH: string = AssetsNames.PATH;
 
     private constructor() {
         this.loader = new Loader();
@@ -34,7 +35,7 @@ export class LoaderService {
      */
     public loadAll(assets: any): void {
         for (let name in assets) {
-            this.load(name, LoaderService.ASSETS_PATH + assets[name]);
+            this.load(assets[name], LoaderService.ASSETS_PATH + assets[name]);
         }
     }
 
@@ -74,5 +75,14 @@ export class LoaderService {
         } else {
             throw new Error(`Texture ${name} not found`);
         }
+    }
+
+    /**
+     * Add progress callback
+     */
+    public addProgressCallback(
+        callback: (loader: Loader, resource: any) => void
+    ): void {
+        this.loader.onProgress.add(callback);
     }
 }

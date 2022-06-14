@@ -21,7 +21,8 @@
     "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
     "types": [
-      "pixi.js"
+      "pixi.js",
+      "lodash"
     ]
   },
   "include": [

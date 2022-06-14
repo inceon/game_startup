@@ -96,6 +96,10 @@ class Game {
         );
     }
 
+    /**
+     * Initialize services
+     * @protected
+     */
     protected initServices(): void {
         RescaleService.getInstance().init(this.app);
     }

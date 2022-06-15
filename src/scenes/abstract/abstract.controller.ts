@@ -2,8 +2,22 @@ import AbstractModel from './abstract.model';
 import AbstractView from './abstract.view';
 
 export default class AbstractController {
-    protected view: AbstractView;
-    protected model: AbstractModel;
+    protected viewComponent: AbstractView;
+    protected modelComponent: AbstractModel;
+
+    /**
+     * Getter for view component
+     */
+    protected get view(): AbstractView {
+        return this.viewComponent as AbstractView;
+    }
+
+    /**
+     * Getter for model component
+     */
+    protected get model(): AbstractModel {
+        return this.modelComponent as AbstractModel;
+    }
 
     /**
      * Initialize controller
@@ -11,21 +25,21 @@ export default class AbstractController {
      * @param model
      */
     constructor(view: AbstractView, model: AbstractModel) {
-        this.view = view;
-        this.model = model;
+        this.viewComponent = view;
+        this.modelComponent = model;
     }
 
     /**
      * Show the view
      */
     showScene(): void {
-        this.view.show();
+        this.viewComponent.show();
     }
 
     /**
      * Hide the view
      */
     hideScene(): void {
-        this.view.hide();
+        this.viewComponent.hide();
     }
 }

@@ -7,7 +7,13 @@ import AbstractController from '../abstract/abstract.controller';
 import PreloaderView from './preloader.view';
 
 export default class PreloaderController extends AbstractController {
-    protected declare view: PreloaderView;
+    /**
+     * @inheritDoc
+     */
+    protected get view(): PreloaderView {
+        return this.viewComponent as PreloaderView;
+    }
+
     /**
      * @inheritDoc
      */

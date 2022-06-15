@@ -3,8 +3,19 @@ import GameModel from './game.model';
 import GameView from './game.view';
 
 export default class GameController extends AbstractController {
-    protected declare view: GameView;
-    protected declare model: GameModel;
+    /**
+     * @inheritDoc
+     */
+    protected get view(): GameView {
+        return this.viewComponent as GameView;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected get model(): GameModel {
+        return this.modelComponent as GameModel;
+    }
 
     /**
      * @inheritDoc

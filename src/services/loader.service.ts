@@ -4,7 +4,6 @@ import AssetsNames from '../misc/assets.names';
 export class LoaderService {
     private static instance: LoaderService;
     private loader: Loader;
-    private static readonly ASSETS_PATH: string = AssetsNames.PATH;
 
     private constructor() {
         this.loader = new Loader();
@@ -35,7 +34,7 @@ export class LoaderService {
      */
     public loadAll(assets: any): Promise<void> {
         for (let name in assets) {
-            this.load(assets[name], LoaderService.ASSETS_PATH + assets[name]);
+            this.load(assets[name], AssetsNames.PATH + assets[name]);
         }
 
         return new Promise((resolve) => {

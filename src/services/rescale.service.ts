@@ -50,10 +50,5 @@ export default class RescaleService {
                 Screen.HEIGHT * this.ratio
             );
         }
-
-        // this.renderer.resize(
-        //     Math.min(DeviceUtils.getClientWidth(), Screen.WIDTH),
-        //     Math.min(DeviceUtils.getClientHeight(), Screen.HEIGHT)
-        // );
     }
 }

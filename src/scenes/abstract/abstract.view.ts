@@ -2,7 +2,7 @@ import { ease } from 'pixi-ease';
 import { Container } from 'pixi.js';
 
 export default class AbstractView {
-    public display: Container;
+    protected display: Container;
     public name: string;
     public changeSceneDuration: number = 500;
 
@@ -21,14 +21,6 @@ export default class AbstractView {
         this.display.name = this.name;
         this.display.visible = false;
         this.display.alpha = 0;
-    }
-
-    /**
-     * Get scene display object
-     * @returns {Container}
-     */
-    public getDisplay(): Container {
-        return this.display;
     }
 
     /**

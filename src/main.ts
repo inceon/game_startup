@@ -127,12 +127,11 @@ class Game {
      * Load initial assets
      */
     protected loadInitialAssets(): void {
-        LoaderService.getInstance().loadAll(
-            AssetsNames.PRELOADER_ASSETS,
-            () => {
+        LoaderService.getInstance()
+            .loadAll(AssetsNames.PRELOADER_ASSETS)
+            .then(() => {
                 this.stateManager.changeState(States.PRELOADER);
-            }
-        );
+            });
     }
 }
 

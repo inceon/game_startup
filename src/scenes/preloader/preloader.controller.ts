@@ -14,17 +14,23 @@ export default class PreloaderController extends AbstractController {
     public showScene(): void {
         super.showScene();
 
-        LoaderService.getInstance().loadAll(
-            AssetsNames.GAME_ASSETS,
-            () => {
+        LoaderService.getInstance()
+            .loadAll(AssetsNames.GAME_ASSETS)
+            .then(() => {
                 setTimeout(() => {
                     StateManager.getInstance().changeState(States.INTRO);
                 }, 2000);
-            }
-        );
+            });
 
-        LoaderService.getInstance().addProgressCallback((loader: Loader) => {
-            this.view.setProgress(loader.progress / 100);
-        });
+        LoaderService.getInstance().addProgressCallback(
+            this.setProgress.bind(this)
+        );
+    }
+
+    /**
+     * Set progress of loading
+     */
+    protected setProgress(loader: Loader): void {
+        this.view.setProgress(loader.progress / 100);
     }
 }
